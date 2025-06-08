@@ -33,11 +33,7 @@ And for the Redirect Uri set it to the one from your `.env` file.
 Next create `init-mongo.js` in your working directory:
 
 ```js
-{
-	{
-		file.examples / init - mongo.js
-	}
-}
+{ { file.examples/init-mongo.js } }
 ```
 
 ### Reverse Proxy
