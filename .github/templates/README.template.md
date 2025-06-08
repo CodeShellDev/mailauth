@@ -1,0 +1,57 @@
+# Mailauth
+
+Mailauth is a Mailbox Manager which securily enables you too select between your Mailboxes and authenticate with your Mailserver, like [mailcow](https://github.com/mailcow/mailcow-dockerized)
+
+## Getting Started
+
+Get the latest version of the `docker-compose.yaml` file:
+
+```yaml
+{ { file.docker-compose.yaml } }
+```
+
+### Setup
+
+Mailauth _currently_ works by modifying the `email` claim during Token Exchange and Userinfo,
+this means that you **will have to** use a IdP (take a look at [authentik](https://goauthentik.com)).
+
+Create a `.env` file inside of you `docker-compose.yaml` directory and copy the template below
+
+```dotenv
+{ { file.examples/config.env } }
+```
+
+Now you need to setup a Oauth Authentication Method in your mailserver,
+but instead of using your IdP's endpoints you use:
+
+- `/oauth/mail/authorize`
+- `/oauth/mail/token`
+- `/oauth/mail/userinfo`
+
+And for the Redirect Uri set it to the one from your `.env` file.
+
+Next create `init-mongo.js` in your working directory:
+
+```js
+{ { file.examples/init-mongo.js } }
+```
+
+### Reverse Proxy
+
+When working with Oauth and Auth in general it is recommended to use secure connections,
+here you will see a Reverse Proxy implementation with traefik:
+
+```yaml
+{ { file.examples/traefik.docker-compose.yaml } }
+```
+
+## Usage
+
+When authenticating via mailauth you get redirected to your actual IdP then to `/select`,
+where you will be able to select your mailbox, mailauth changes the `email` claim and now you're logged in.
+
+## Contributing
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)

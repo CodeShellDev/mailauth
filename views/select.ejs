@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Mailbox Selection</title>
+		<link
+			rel="stylesheet"
+			href="./style/style.css" />
+		<style>
+			.mailbox-item:hover {
+				border: 3px solid #ffffff;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Select Mailbox</h1>
+
+		<hr />
+
+		<br />
+
+		<div class="mailbox-container"></div>
+
+		<script type="module">
+			import { MailboxGrid, MailboxAction } from "./js/mailbox.js"
+
+			async function SelectMailbox(email) {
+				const response = await fetch("<%= prefix %>/data/mailbox/select", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ email: email }),
+				})
+
+				const data = await response.json()
+
+				if (response.status !== 500) {
+					window.location.href = data.url
+				}
+			}
+
+			const mailboxGrid = new MailboxGrid({
+				endpoint: "<%= prefix %>/data/mailbox",
+				actions: [
+					new MailboxAction({
+						events: [
+							{
+								name: "click",
+								listener: async (element, profile) => {
+									await SelectMailbox(profile.email)
+								},
+							},
+						],
+					}),
+				],
+			})
+
+			const mailboxes = await mailboxGrid.getMailboxes()
+
+			if (mailboxes.length == 1) {
+				await SelectMailbox(mailboxes[0].email)
+			}
+
+			await mailboxGrid.create()
+
+			setInterval(async () => {
+				await mailboxGrid.update()
+			}, 5000)
+		</script>
+	</body>
+</html>
