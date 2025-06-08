@@ -127,14 +127,11 @@ And for the Redirect Uri set it to the one from your `.env` file.
 Next create `init-mongo.js` in your working directory:
 
 ```js
-// This is only for initializing the db and creating the mailauth user
-
-db = db.getSiblingDB("mailauth")
-db.createUser({
-	user: "mailauth",
-	pwd: "SECURE_PW", // This should match the one in your env
-	roles: [{ role: "readWrite", db: "mailauth" }],
-})
+{
+	{
+		file.examples / init - mongo.js
+	}
+}
 ```
 
 ### Reverse Proxy
@@ -207,6 +204,15 @@ When authenticating via mailauth you get redirected to your actual IdP then to `
 where you will be able to select your mailbox, mailauth changes the `email` claim and now you're logged in.
 
 ## Contributing
+
+Found an Issue or want to see something implemented into Mailauth?
+Open up an Issue or start a Pull Request!
+
+But always be respectful and patient, we are all volunteers after all.
+
+## Supporting
+
+Found this Project useful? Let others know about Mailauth by ⭐️ this Repo!
 
 ## License
 
