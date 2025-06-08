@@ -13,7 +13,7 @@ Get the latest version of the `docker-compose.yaml` file:
 ### Setup
 
 Mailauth _currently_ works by modifying the `email` claim during Token Exchange and Userinfo,
-this means that you **will have to** use a IdP (take a look at [authentik](https://goauthentik.com)).
+this means that you **will have to** use a IdP (take a look at [authentik](https://goauthentik.org)).
 
 Create a `.env` file inside of you `docker-compose.yaml` directory and copy the template below
 
