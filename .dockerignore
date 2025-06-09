@@ -6,3 +6,4 @@ docker-compose.yaml
 LICENSE
 *.md
 node_modules
+*.pem
