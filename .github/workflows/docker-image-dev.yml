@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - dev
-    paths:
-      - "!.**"
+    paths-ignore:
+      - ".**"
 
 jobs:
   update:
