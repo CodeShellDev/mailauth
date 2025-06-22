@@ -10,4 +10,4 @@ jobs:
   update:
     uses: codeshelldev/gh-actions/.github/workflows/readme-update.yml@main
     secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
