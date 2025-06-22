@@ -1,8 +1,11 @@
 name: Build & Push Dev Image
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - dev
+    paths:
+      - "!.**"
 
 jobs:
   update:
