@@ -6,15 +6,8 @@ on:
 
 jobs:
   update:
-    uses: codeshelldev/gh-actions/.github/workflows/docker-image.yaml@main
+    uses: codeshelldev/gh-actions/.github/workflows/docker-image.yml@main
     with:
       registry: ghcr.io
-      flavor: |
-        latest=false
-      tags: |
-        type=semver,pattern=v{{major}}
-        type=semver,pattern=v{{version}}
-        type=semver,pattern=v{{major}}.{{minor}}
-        type=semver,pattern=latest
     secrets:
       GH_PCKG_TOKEN: ${{ secrets.GH_PCKG_TOKEN }}

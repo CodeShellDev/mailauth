@@ -1,12 +1,15 @@
 name: Build & Push Dev Image
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - dev
+    paths-ignore:
+      - ".**"
 
 jobs:
   update:
-    uses: codeshelldev/gh-actions/.github/workflows/docker-image.yaml@main
+    uses: codeshelldev/gh-actions/.github/workflows/docker-image.yml@main
     with:
       registry: ghcr.io
       flavor: |
