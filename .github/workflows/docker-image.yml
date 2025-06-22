@@ -42,6 +42,13 @@ jobs:
             type=semver,pattern=v{{version}}
             type=semver,pattern=v{{major}}.{{minor}}
             type=semver,pattern=latest
+          labels: |
+            org.opencontainers.image.title={{ env.IMAGE_NAME }}
+            org.opencontainers.image.version=v{{version}}
+            org.opencontainers.image.authors={{ env.USERNAME }}
+            org.opencontainers.image.licenses="MIT"
+            org.opencontainers.image.url="https://github.com/{{ env.IMAGE_NAME }}"
+            org.opencontainers.image.source="https://github.com/{{ env.IMAGE_NAME }}"
 
       - name: Build and Push Image
         uses: docker/build-push-action@v6
