@@ -1,6 +1,6 @@
 # Mailauth
 
-Mailauth is a Mailbox Manager which securily enables you too select between your Mailboxes and authenticate with your Mailserver, like [mailcow](https://github.com/mailcow/mailcow-dockerized)
+Mailauth is a Mailbox Manager which enables you too select between your Mailboxes and authenticate with your Mailserver, like [mailcow](https://github.com/mailcow/mailcow-dockerized)
 
 ## Getting Started
 
@@ -58,7 +58,7 @@ volumes:
 ### Setup
 
 Mailauth _currently_ works by modifying the `email` claim during Token Exchange and Userinfo,
-this means that you **will have to** use a IdP (take a look at [authentik](https://goauthentik.io)).
+this means that you **will have to** use a IdP (like [authentik](https://goauthentik.io)).
 
 Create a `.env` file inside of you `docker-compose.yaml` directory and copy the template below
 
@@ -139,7 +139,7 @@ db.createUser({
 
 ### Reverse Proxy
 
-When working with Oauth and Auth in general it is recommended to use secure connections,
+When working with Oauth2 and Auth in general it is recommended to be sure to use secure connections,
 here you will see a Reverse Proxy implementation with traefik:
 
 ```yaml
