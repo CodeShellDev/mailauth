@@ -8,6 +8,6 @@ on:
 
 jobs:
   update:
-    uses: codeshelldev/gh-actions/.github/workflows/readme-update.yaml
+    uses: codeshelldev/gh-actions/.github/workflows/readme-update.yaml@main
     secrets:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

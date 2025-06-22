@@ -6,7 +6,7 @@ on:
 
 jobs:
   update:
-    uses: codeshelldev/gh-actions/.github/workflows/docker-image.yaml
+    uses: codeshelldev/gh-actions/.github/workflows/docker-image.yaml@main
     with:
       registry: ghcr.io
       flavor: |
