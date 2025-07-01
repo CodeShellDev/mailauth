@@ -155,11 +155,7 @@ db.createUser({
 When working with Oauth2 and Auth in general it is recommended to be sure to use secure connections,
 here you will see a Reverse Proxy implementation with traefik:
 
-```y![mailauth_2](https://github.com/user-attachments/assets/4acfc818-7c66-414d-b604-5f02a900d524)
-![mailauth_1](https://github.com/user-attachments/assets/216acae8-e6c3-410c-9ca9-c61e98cf8b54)
-![mailauth_3](https://github.com/user-attachments/assets/6364a90c-30b0-4588-a36a-981c0ddb5c39)
-![mailauth_4](https://github.com/user-attachments/assets/91cf383d-d67b-4088-848e-6ea04b31b1cb)
-aml
+```yaml
 ---
 services:
   mailauth:
