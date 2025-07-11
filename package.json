@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/CodeShellDev/mailauth.git"
   },
-  "license": "ISC",
+  "license": "MIT",
   "author": "codeshell",
   "type": "commonjs",
   "main": "app.js",
