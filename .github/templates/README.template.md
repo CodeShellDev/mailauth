@@ -6,15 +6,6 @@ Mailauth is a Mailbox Manager which enables you too select between your Mailboxe
 
 ![mailauth-home](https://github.com/user-attachments/assets/934fb3a3-3160-4fcb-a30e-10b62a804411)
 
-![mailauth_1](https://github.com/user-attachments/assets/f24119aa-2749-467d-a7bc-9ee091eee5aa)
-
-![mailauth_2](https://github.com/user-attachments/assets/124d9e7d-b377-4935-85c2-cf16e2be47c5)
-
-![mailauth_3](https://github.com/user-attachments/assets/a3631281-dedf-4f91-a2a8-140531cef665)
-
-![mailauth_4](https://github.com/user-attachments/assets/7a29fa39-2fbf-40fb-9c4a-3c0e16ade15d)
-
-
 ## Getting Started
 
 Get the latest version of the `docker-compose.yaml` file:
