@@ -32,7 +32,7 @@ but instead of using your IdP's endpoints you use:
 - `/oauth/mail/token`
 - `/oauth/mail/userinfo`
 
-And for the Redirect Uri set it to the one from your `.env` file.
+And set Redirect URI to the one from your `.env` file.
 
 Next create `init-mongo.js` in your working directory:
 
