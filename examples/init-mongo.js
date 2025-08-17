@@ -1,8 +1,12 @@
-// This is only for initializing the db and creating the mailauth user
+const PASSWORD = process.env.MONGO_PW
+const USER = process.env.MONGO_USER
+const DB = process.env.MONGO_INITDB_DATABASE
 
-db = db.getSiblingDB("mailauth")
+db = db.getSiblingDB(DB) // Switch to your target database
 db.createUser({
-	user: "mailauth",
-	pwd: "SECURE_PW", // This should match the one in your env
-	roles: [{ role: "readWrite", db: "mailauth" }],
+	user: USER,
+	pwd: PASSWORD,
+	roles: [
+		{ role: "readWrite", db: DB }, // Give read/write access to 'mailauth'
+	],
 })
