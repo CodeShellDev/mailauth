@@ -1,6 +1,6 @@
 # Mailauth
 
-Mailauth is a Mailbox Manager which enables you too select between your Mailboxes and authenticate with your Mailserver, like [mailcow](https://github.com/mailcow/mailcow-dockerized)
+Mailauth is a Mailbox Manager which enables you too select between your Mailboxes and authenticate with your Mailserver (like [mailcow](https://github.com/mailcow/mailcow-dockerized))
 
 ## Showcase
 
