@@ -1,6 +1,6 @@
 # Mailauth
 
-Mailauth is a Mailbox Manager which enables you too select between your Mailboxes and authenticate with your Mailserver, like [mailcow](https://github.com/mailcow/mailcow-dockerized)
+Mailauth is a Mailbox Manager which enables you too select between your Mailboxes and authenticate with your Mailserver (like [mailcow](https://github.com/mailcow/mailcow-dockerized))
 
 ## Showcase
 
@@ -131,13 +131,17 @@ And set Redirect URI to the one from your `.env` file.
 Next create `init-mongo.js` in your working directory:
 
 ```js
-// This is only for initializing the db and creating the mailauth user
+const PASSWORD = process.env.MONGO_PW
+const USER = process.env.MONGO_USER
+const DB = process.env.MONGO_INITDB_DATABASE
 
-db = db.getSiblingDB("mailauth")
+db = db.getSiblingDB(DB) // Switch to your target database
 db.createUser({
-	user: "mailauth",
-	pwd: "SECURE_PW", // This should match the one in your env
-	roles: [{ role: "readWrite", db: "mailauth" }],
+	user: USER,
+	pwd: PASSWORD,
+	roles: [
+		{ role: "readWrite", db: DB }, // Give read/write access to 'mailauth'
+	],
 })
 ```
 
