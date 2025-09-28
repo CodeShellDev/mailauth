@@ -42,7 +42,7 @@ Next create `init-mongo.js` in your working directory:
 
 ### Reverse Proxy
 
-When working with Oauth2 and Auth in general it is recommended to be sure to use secure connections,
+When working with OAuth2 and Auth in general it is recommended to be sure to use secure connections,
 here you will see a Reverse Proxy implementation with traefik:
 
 ```yaml
