@@ -28,9 +28,9 @@ Create a `.env` file inside of you `docker-compose.yaml` directory and copy the 
 Now you need to setup a Oauth Authentication Method in your mailserver,
 but instead of using your IdP's endpoints you use:
 
-- `/oauth/mail/authorize`
-- `/oauth/mail/token`
-- `/oauth/mail/userinfo`
+* `/oauth/mail/authorize`
+* `/oauth/mail/token`
+* `/oauth/mail/userinfo`
 
 And set Redirect URI to the one from your `.env` file.
 
