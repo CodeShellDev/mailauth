@@ -115,8 +115,8 @@ HOST=https://mailauth.domain.com
 
 PREFIX=/ # Optional
 
-DB_HOST=mongodb://${MONGO_USER}:${MONGO_PW}:27017/${MONGO_INITDB_DATABASE}
-REDIS_HOST=redis://default:${REDIS_PASSWORD}:6379
+DB_HOST=mongodb://${MONGO_USER}:${MONGO_PW}@mongo:27017/${MONGO_INITDB_DATABASE}
+REDIS_HOST=redis://default:${REDIS_PASSWORD}@redis:6379
 ```
 
 Now you need to setup a Oauth Authentication Method in your mailserver,
