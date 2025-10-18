@@ -11,7 +11,7 @@ Mailauth is a Mailbox Manager which enables you too select between your Mailboxe
 Get the latest version of the `docker-compose.yaml` file:
 
 ```yaml
-{ { file.docker-compose.yaml } }
+{{{ #://docker-compose.yaml }}}
 ```
 
 ### Setup
@@ -22,7 +22,7 @@ this means that you **will have to** use a IdP (like [authentik](https://goauthe
 Create a `.env` file inside of you `docker-compose.yaml` directory and copy the template below
 
 ```dotenv
-{ { file.examples/config.env } }
+{{{ #://examples/config.env }}}
 ```
 
 Now you need to setup a Oauth Authentication Method in your mailserver,
@@ -37,7 +37,7 @@ And set Redirect URI to the one from your `.env` file.
 Next create `init-mongo.js` in your working directory:
 
 ```js
-{ { file.examples/init-mongo.js } }
+{{{ #://examples/init-mongo.js }}}
 ```
 
 ### Reverse Proxy
@@ -46,7 +46,7 @@ When working with OAuth2 and Auth in general it is recommended to be sure to use
 here you will see a Reverse Proxy implementation with traefik:
 
 ```yaml
-{ { file.examples/traefik.docker-compose.yaml } }
+{{{ #://examples/traefik.docker-compose.yaml }}}
 ```
 
 ## Usage
