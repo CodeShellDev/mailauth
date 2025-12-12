@@ -26,7 +26,7 @@ app.use(config.PREFIX, express.static("public"))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-app.set("views", path.join(__dirname, "../views"))
+app.set("views", "views")
 app.set("view engine", "ejs")
 
 app.enable("trust proxy")
@@ -80,4 +80,5 @@ app.listen(PORT, () => {
 
 	logger.log(`Server running on http://localhost:${PORT}`)
 })
+
 
