@@ -21,7 +21,7 @@ const app = express()
 
 const PORT = process.env.PORT || 3000
 
-app.use(config.PREFIX, express.static(path.join(__dirname, "../public")))
+app.use(config.PREFIX, express.static("public"))
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
@@ -80,3 +80,4 @@ app.listen(PORT, () => {
 
 	logger.log(`Server running on http://localhost:${PORT}`)
 })
+
