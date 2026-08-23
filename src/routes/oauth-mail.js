@@ -66,19 +66,13 @@ function GetBaseUrl(req, overwriteHost = null) {
 	const prot = req.protocol
 	const host = overwriteHost || req.get("host")
 
-	logger.info(`Protocol: ${prot}`)
-
 	return `${prot}://${host}`
 }
 
 function GetMatchingRedirectUri(req, redirectUris, host = null) {
 	const baseUrl = GetBaseUrl(req, host)
 
-	logger.info(`Base URL: ${baseUrl}`)
-
 	const rootDomain = tldts.parse(baseUrl).domain
-
-	logger.info(`Domain: ${rootDomain}`)
 
 	let candidates = redirectUris.filter(
 		(uri) => tldts.parse(uri).domain === rootDomain,
@@ -118,7 +112,6 @@ router.get("/authorize", async (req, res, next) => {
 		if (referer) {
 			try {
 				originalHost = new URL(referer).host
-				logger.info("Using Referer...")
 			} catch {
 				// malformed Referer, fall back to req.get("host")
 			}
@@ -130,14 +123,10 @@ router.get("/authorize", async (req, res, next) => {
 			originalHost,
 		)
 
-		logger.info(`Host: ${originalHost}`)
-
 		// state is attacker-influenced (comes from mailcow's query string),
 		// so it must never be used directly as a cache key.
 		// Generate our own random nonce instead
 		const nonce = crypto.randomBytes(24).toString("hex")
-
-		logger.info(`state: ${req.query.state}`)
 
 		await WriteToCache(`state:${nonce}`, {
 			host: originalHost,
@@ -223,8 +212,6 @@ router.get("/callback", async (req, res, next) => {
 
 		await WriteToCache(`access:${tokenRes.access_token}`, idToken.sub)
 
-		logger.info(`state: ${stateData.origState}`)
-
 		req.session.mail = {
 			code: codeHandle,
 			state: stateData.origState,
@@ -260,16 +247,11 @@ router.get("/mailbox", async (req, res, next) => {
 
 		req.session.mail = {}
 
-		logger.info("Checking Redirect URIS...")
-
 		const redirectUri = GetMatchingRedirectUri(
 			req,
 			config.MAIL_CALLBACK_URIS,
 			originalHost,
 		)
-
-		logger.info("URIS: ", config.MAIL_CALLBACK_URIS)
-		logger.info("Host: ", originalHost)
 
 		if (!redirectUri) {
 			return res.status(400).send("No matching callback URI")
