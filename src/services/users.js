@@ -7,7 +7,7 @@ export async function FindOrCreateUser(id, name) {
 		{ id: id },
 		{
 			id: id,
-			name: profile.name,
+			name: name,
 			mailboxes: [],
 		},
 	)

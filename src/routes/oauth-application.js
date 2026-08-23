@@ -27,7 +27,7 @@ passport.use(
 				return done(new Error("OIDC profile missing id"))
 			}
 
-			services.users.FindOrCreateUser()
+			services.users.FindOrCreateUser(profile.id, profile.name)
 
 			logger.dev("Profile: ", profile)
 
