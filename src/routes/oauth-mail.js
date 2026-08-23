@@ -137,6 +137,8 @@ router.get("/authorize", async (req, res, next) => {
 		// Generate our own random nonce instead
 		const nonce = crypto.randomBytes(24).toString("hex")
 
+		logger.info("state: ", stateData.origState)
+
 		await WriteToCache(`state:${nonce}`, {
 			host: originalHost,
 			origState: req.query.state,
@@ -211,6 +213,8 @@ router.get("/callback", async (req, res, next) => {
 		const idToken = DecodeToken(tokenRes.id_token)
 
 		await WriteToCache(`access:${tokenRes.access_token}`, idToken.sub)
+
+		logger.info("state: ", stateData.origState)
 
 		req.session.mail = {
 			code: codeHandle,

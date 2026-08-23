@@ -103,7 +103,7 @@ export async function GetFromCache(key) {
 	}
 }
 
-export async function WriteToCache(key, value, ttl = 3600) {
+export async function WriteToCache(key, value, ttl = 900) {
 	if (typeof value !== "string") {
 		value = JSON.stringify(value)
 	}
