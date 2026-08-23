@@ -149,7 +149,9 @@ router.get("/authorize", async (req, res, next) => {
 		// check if matchedUri's domain is equal to the current request domain
 		// if not repeat /authorize under the correct domain
 		if (matchedUri && tldts.parse(GetBaseUrl(req)).domain !== matchedDomain) {
-			const authorizeUrl = GetBaseUrl(req, matchedDomain)
+			// HACK: this replaces callback with authorize so that instances that have their /oauth/mail paths potentially redirected by a proxy
+			// still continue on that redirected path instead of leading back to the default /oauth/mail/authorize
+			const authorizeUrl = matchedUri.replace("callback", "authorize")
 
 			// replace state with our nonce key
 			const forwardedQuery = new URLSearchParams(req.query)
