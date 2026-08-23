@@ -130,7 +130,7 @@ router.get("/authorize", async (req, res, next) => {
 			originalHost,
 		)
 
-		logger.info("Host: ", originalHost)
+		logger.info(`Host: ${originalHost}`)
 
 		// state is attacker-influenced (comes from mailcow's query string),
 		// so it must never be used directly as a cache key.
