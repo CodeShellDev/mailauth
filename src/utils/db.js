@@ -38,82 +38,53 @@ export function Connect() {
 
 // Mongo
 
-export async function InsertUser(user) {
+export async function FindBy(collectionName, query) {
 	const db = await Connect()
 
-	const collection = db.collection("users")
+	const collection = db.collection(collectionName)
 
-	const result = await collection.insertOne(user)
-
-	return result
+	return collection.findOne(query)
 }
 
-export async function GetUserByID(id) {
+export async function FindOrCreate(collectionName, query, data = {}) {
 	const db = await Connect()
 
-	const collection = db.collection("users")
+	const collection = db.collection(collectionName)
 
-	return await collection.findOne({ id: id })
-}
-
-export async function DeleteUserByID(id) {
-	const db = await Connect()
-
-	const collection = db.collection("users")
-
-	const result = await collection.deleteOne({ id: id })
-
-	logger.warn("Deleted a User")
-
-	return result
-}
-
-export async function FindBy(query) {
-	const db = await Connect()
-
-	const collection = db.collection("users")
-
-	const result = await collection.findOne(query)
-
-	return result
-}
-
-export async function AddToArray(query, update) {
-	const db = await Connect()
-
-	const collection = db.collection("users")
-
-	const result = await collection.updateOne(
+	return collection.findOneAndUpdate(
 		query,
-		{ $addToSet: update },
-		{ upsert: true },
+		{
+			$setOnInsert: data,
+		},
+		{
+			upsert: true,
+			returnDocument: "after",
+		},
 	)
-
-	return result
 }
 
-export async function DeleteFromArrayBy(query, update) {
+export async function AddToArray(collectionName, query, update) {
 	const db = await Connect()
 
-	const collection = db.collection("users")
+	const collection = db.collection(collectionName)
 
-	const result = await collection.updateOne(query, { $pull: update })
-
-	return result
+	return collection.updateOne(query, { $addToSet: update })
 }
 
-export async function UpdateBy(query, update) {
+export async function DeleteFromArrayBy(collectionName, query, update) {
 	const db = await Connect()
 
-	const collection = db.collection("users")
+	const collection = db.collection(collectionName)
 
-	const result = await collection.updateOne(
-		query,
-		{ $set: update },
-		{ upsert: true },
-	)
+	return collection.updateOne(query, { $pull: update })
+}
 
-	return result
+export async function UpdateBy(collectionName, query, update) {
+	const db = await Connect()
+
+	const collection = db.collection(collectionName)
+
+	return collection.updateOne(query, { $set: update })
 }
 
 // REDIS

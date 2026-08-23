@@ -6,12 +6,9 @@ import { DecodeToken, SignToken } from "#utils/token"
 
 import logger from "#utils/logger"
 import config from "#utils/config"
-import {
-	GetUserByID,
-	WriteToCache,
-	GetFromCache,
-	DeleteFromCache,
-} from "#utils/db"
+import { WriteToCache, GetFromCache, DeleteFromCache } from "#utils/db"
+
+import services from "#services"
 
 import tldts from "tldts"
 
@@ -58,7 +55,7 @@ async function GetUserInfo(endpoint, token) {
 async function IsOwnedByUser(id, email) {
 	if (!id || !email) return false
 
-	const user = await GetUserByID(id)
+	const user = await services.users.GetUserByID(id)
 
 	if (!user) return false
 
