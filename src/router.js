@@ -1,7 +1,7 @@
 import { Router } from "express"
 
 import { HttpError } from "#types/errors"
-import { GetUserByID } from "#utils/db"
+import services from "#services"
 
 const router = Router()
 
@@ -66,7 +66,7 @@ router.use(async (req, res, next) => {
 
 	if (id) {
 		res.locals.id = id
-		res.locals.user = await GetUserByID(id)
+		res.locals.user = await services.users.GetUserByID(id)
 	}
 
 	next()
