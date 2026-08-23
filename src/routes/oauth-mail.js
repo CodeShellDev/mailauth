@@ -116,9 +116,9 @@ router.get("/authorize", async (req, res, next) => {
 		let originalHost = req.get("host")
 
 		if (referer) {
-			logger.info("Using Referer...")
 			try {
 				originalHost = new URL(referer).host
+				logger.info("Using Referer...")
 			} catch {
 				// malformed Referer, fall back to req.get("host")
 			}
