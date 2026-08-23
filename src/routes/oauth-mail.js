@@ -144,15 +144,19 @@ router.get("/authorize", async (req, res, next) => {
 			origState: req.query.state,
 		})
 
-		if (
-			matchedUri &&
-			tldts.parse(GetBaseUrl(req)).domain !== tldts.parse(matchedUri).domain
-		) {
-			const authorizeUrl = matchedUri.replace("callback", "authorize")
+		const matchedDomain = tldts.parse(matchedUri).domain
+
+		// check if matchedUri's domain is equal to the current request domain
+		// if not repeat /authorize under the correct domain
+		if (matchedUri && tldts.parse(GetBaseUrl(req)).domain !== matchedDomain) {
+			const authorizeUrl = GetBaseUrl(req, matchedDomain)
 
 			// replace state with our nonce key
 			const forwardedQuery = new URLSearchParams(req.query)
-			forwardedQuery.set("state", nonce)
+
+			// use req.query.state instead of nonce since we are just repeating the /authorize flow,
+			// just this time on the correct domain
+			forwardedQuery.set("state", req.query.state)
 
 			return res.redirect(`${authorizeUrl}?${forwardedQuery.toString()}`)
 		}
