@@ -55,9 +55,9 @@ async function ValidateMailboxAsync(email, name) {
 		throw new HttpError(400, "Invalid name")
 	}
 
-	const existing = await services.mailboxes.GetMailboxByEmail(email)
+	const mailbox = await services.mailboxes.GetMailboxByEmail(email)
 
-	if (existing) {
+	if (mailbox) {
 		throw new HttpError(409, "Mailbox already claimed")
 	}
 }
@@ -65,7 +65,7 @@ async function ValidateMailboxAsync(email, name) {
 async function EnsureNotMailboxAsync(email) {
 	ValidateEmail(email)
 
-	const existing = await services.mailboxes.GetMailboxByEmail(email)
+	const mailbox = await services.mailboxes.GetMailboxByEmail(email)
 
 	if (mailbox) {
 		throw new HttpError(409, "Mailbox already claimed")
@@ -75,7 +75,7 @@ async function EnsureNotMailboxAsync(email) {
 async function EnsureMailboxAsync(email) {
 	ValidateEmail(email)
 
-	const existing = await services.mailboxes.GetMailboxByEmail(email)
+	const mailbox = await services.mailboxes.GetMailboxByEmail(email)
 
 	if (!mailbox) {
 		throw new HttpError(404, "Mailbox does not exist")
