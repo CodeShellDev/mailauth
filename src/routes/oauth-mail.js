@@ -116,6 +116,7 @@ router.get("/authorize", async (req, res, next) => {
 		let originalHost = req.get("host")
 
 		if (referer) {
+			logger.info("Using Referer...")
 			try {
 				originalHost = new URL(referer).host
 			} catch {
@@ -128,6 +129,8 @@ router.get("/authorize", async (req, res, next) => {
 			config.MAIL_REDIRECT_URIS,
 			originalHost,
 		)
+
+		logger.info("Host: ", originalHost)
 
 		// state is attacker-influenced (comes from mailcow's query string),
 		// so it must never be used directly as a cache key.
@@ -230,7 +233,7 @@ router.get("/mailbox", async (req, res, next) => {
 			return res.status(400).send("No pending mail session")
 		}
 
-		const originalHost = await GetFromCache(`state:${mailData.state}`)
+		const originalHost = await GetFromCache(`state:${mailData.state}`)?.host
 
 		const tokenRes = await GetFromCache(`code:${mailData.code}`)
 
