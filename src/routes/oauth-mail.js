@@ -244,6 +244,9 @@ router.get("/mailbox", async (req, res, next) => {
 			originalHost,
 		)
 
+		logger.info("URIS: ", config.MAIL_CALLBACK_URIS)
+		logger.info("Host: ", originalHost)
+
 		if (!redirectUri) {
 			return res.status(400).send("No matching callback URI")
 		}
