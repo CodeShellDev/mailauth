@@ -137,7 +137,7 @@ router.get("/authorize", async (req, res, next) => {
 		// Generate our own random nonce instead
 		const nonce = crypto.randomBytes(24).toString("hex")
 
-		logger.info("state: ", req.query.state)
+		logger.info(`state: ${req.query.state}`)
 
 		await WriteToCache(`state:${nonce}`, {
 			host: originalHost,
