@@ -72,7 +72,11 @@ function GetBaseUrl(req, overwriteHost = null) {
 function GetMatchingRedirectUri(req, redirectUris, host = null) {
 	const baseUrl = GetBaseUrl(req, host)
 
+	logger.info("Base URL: ", baseUrl)
+
 	const rootDomain = tldts.parse(baseUrl).domain
+
+	logger.info("Domain: ", rootDomain)
 
 	let candidates = redirectUris.filter(
 		(uri) => tldts.parse(uri).domain === rootDomain,
