@@ -6,12 +6,9 @@ import { DecodeToken, SignToken } from "#utils/token"
 
 import logger from "#utils/logger"
 import config from "#utils/config"
-import {
-	GetUserByID,
-	WriteToCache,
-	GetFromCache,
-	DeleteFromCache,
-} from "#utils/db"
+import { WriteToCache, GetFromCache, DeleteFromCache } from "#utils/db"
+
+import services from "#services"
 
 import tldts from "tldts"
 
@@ -58,7 +55,7 @@ async function GetUserInfo(endpoint, token) {
 async function IsOwnedByUser(id, email) {
 	if (!id || !email) return false
 
-	const user = await GetUserByID(id)
+	const user = await services.users.GetUserByID(id)
 
 	if (!user) return false
 
@@ -136,18 +133,26 @@ router.get("/authorize", async (req, res, next) => {
 			origState: req.query.state,
 		})
 
-		if (
-			matchedUri &&
-			tldts.parse(GetBaseUrl(req)).domain !== tldts.parse(matchedUri).domain
-		) {
+		const matchedDomain = tldts.parse(matchedUri).domain
+
+		// check if matchedUri's domain is equal to the current request domain
+		// if not repeat /authorize under the correct domain
+		if (matchedUri && tldts.parse(GetBaseUrl(req)).domain !== matchedDomain) {
+			// HACK: this replaces callback with authorize so that instances that have their /oauth/mail paths potentially redirected by a proxy
+			// still continue on that redirected path instead of leading back to the default /oauth/mail/authorize
 			const authorizeUrl = matchedUri.replace("callback", "authorize")
 
+			// replace state with our nonce key
 			const forwardedQuery = new URLSearchParams(req.query)
-			forwardedQuery.set("state", nonce)
+
+			// use req.query.state instead of nonce since we are just repeating the /authorize flow,
+			// just this time on the correct domain
+			forwardedQuery.set("state", req.query.state)
 
 			return res.redirect(`${authorizeUrl}?${forwardedQuery.toString()}`)
 		}
 
+		// replace state with our nonce key
 		const forwardedQuery = new URLSearchParams(req.query)
 		forwardedQuery.set("state", nonce)
 
@@ -162,6 +167,7 @@ router.get("/authorize", async (req, res, next) => {
 
 router.get("/callback", async (req, res, next) => {
 	try {
+		// get our generated nonce key from the "state"
 		const nonce = req.query.state
 
 		if (!nonce) {
@@ -227,7 +233,7 @@ router.get("/mailbox", async (req, res, next) => {
 			return res.status(400).send("No pending mail session")
 		}
 
-		const originalHost = await GetFromCache(`state:${mailData.state}`)
+		const originalHost = await GetFromCache(`state:${mailData.state}`)?.host
 
 		const tokenRes = await GetFromCache(`code:${mailData.code}`)
 

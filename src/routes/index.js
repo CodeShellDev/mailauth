@@ -1,8 +1,6 @@
 import { Router } from "express"
 
-import { HttpError } from "#types/errors"
 import { RequireMailAuth } from "#router"
-import logger from "#utils/logger"
 
 const router = Router()
 

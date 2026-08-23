@@ -5,6 +5,7 @@ import logger from "#utils/logger"
 
 import passport from "passport"
 import { Strategy as OpenIDConnectStrategy } from "passport-openidconnect"
+import services from "#services"
 
 const router = Router()
 
@@ -26,6 +27,8 @@ passport.use(
 				return done(new Error("OIDC profile missing id"))
 			}
 
+			services.users.FindOrCreateUser(profile.id, profile.name)
+
 			logger.dev("Profile: ", profile)
 
 			return done(null, profile)
@@ -36,8 +39,6 @@ passport.use(
 passport.serializeUser((user, done) => {
 	done(null, {
 		id: user.id,
-		displayName: user.displayName,
-		emails: user.emails,
 	})
 })
 
