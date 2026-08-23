@@ -66,17 +66,19 @@ function GetBaseUrl(req, overwriteHost = null) {
 	const prot = req.protocol
 	const host = overwriteHost || req.get("host")
 
+	logger.info(`Protocol: ${prot}`)
+
 	return `${prot}://${host}`
 }
 
 function GetMatchingRedirectUri(req, redirectUris, host = null) {
 	const baseUrl = GetBaseUrl(req, host)
 
-	logger.info("Base URL: ", baseUrl)
+	logger.info(`Base URL: ${baseUrl}`)
 
 	const rootDomain = tldts.parse(baseUrl).domain
 
-	logger.info("Domain: ", rootDomain)
+	logger.info(`Domain: ${rootDomain}`)
 
 	let candidates = redirectUris.filter(
 		(uri) => tldts.parse(uri).domain === rootDomain,
@@ -241,6 +243,8 @@ router.get("/mailbox", async (req, res, next) => {
 		await WriteToCache(`id:${idToken.sub}`, mailData.selected_mailbox)
 
 		req.session.mail = {}
+
+		logger.info("Checking Redirect URIS...")
 
 		const redirectUri = GetMatchingRedirectUri(
 			req,
