@@ -150,12 +150,14 @@ router.get("/authorize", async (req, res, next) => {
 		) {
 			const authorizeUrl = matchedUri.replace("callback", "authorize")
 
+			// replace state with our nonce key
 			const forwardedQuery = new URLSearchParams(req.query)
 			forwardedQuery.set("state", nonce)
 
 			return res.redirect(`${authorizeUrl}?${forwardedQuery.toString()}`)
 		}
 
+		// replace state with our nonce key
 		const forwardedQuery = new URLSearchParams(req.query)
 		forwardedQuery.set("state", nonce)
 
@@ -170,6 +172,7 @@ router.get("/authorize", async (req, res, next) => {
 
 router.get("/callback", async (req, res, next) => {
 	try {
+		// get our generated nonce key from the "state"
 		const nonce = req.query.state
 
 		if (!nonce) {
@@ -214,7 +217,7 @@ router.get("/callback", async (req, res, next) => {
 
 		await WriteToCache(`access:${tokenRes.access_token}`, idToken.sub)
 
-		logger.info("state: ", stateData.origState)
+		logger.info(`state: ${stateData.origState}`)
 
 		req.session.mail = {
 			code: codeHandle,
